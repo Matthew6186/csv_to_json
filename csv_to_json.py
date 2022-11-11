@@ -3,7 +3,7 @@ import csv
 import json
 import pprint
 
-FILENAME = './vital_raw_20220822_2.csv'
+FILENAME = './sample.csv'
 
 def main():
     # csv2tsv_temperature()
@@ -18,6 +18,9 @@ def add_devid(head, tmparr):
     tmpstr = tmpstr[:-1]
 
     return tmpstr
+
+def csv2json():
+    pass
 
 def csv2tsv_vital():
     outarr = []

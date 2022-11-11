@@ -1,0 +1,30 @@
+{
+    "sample.csv": [
+        {
+            "device_id": "aaaa111",
+            "acquisitiontime": "2022-11-01 10:00:01.171000",
+            "inputdate": "NULL",
+            "unmonitored": "0",
+            "data_json": {
+                "original_data": "0186000000000000000000000000000000",
+                "minimum_A": 0,
+                "maximum_A": 0,
+                "pulse": 0,
+                "STPS": 0
+            }
+        },
+        {
+            "device_id": "bbb22",
+            "acquisitiontime": "2022-11-02 21:30:02.102000",
+            "inputdate": "NULL",
+            "unmonitored": "1",
+            "data_json": {
+                "original_data": "0187000000000000000000000000000000",
+                "minimum_A": 1,
+                "maximum_A": 1,
+                "pulse": 1,
+                "STPS": 1
+            }
+        }
+    ]
+}
