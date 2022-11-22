@@ -12,10 +12,9 @@ def main():
 def add_devid(head, tmparr):
     tmpstr = ""
     for i, ihead in enumerate(head):
-        # tmpstr += "'" + str(ihead) + "':'" + str(tmparr[i]) + "',"
-        # tmpstr += '"' + str(ihead) + '":"' + str(tmparr[i]) + '",'
-        tmpstr += str(ihead) + ':' + str(tmparr[i]) + ','
-        # tmpstr += str(ihead) + ':"' + str(tmparr[i]) + '",'
+        tmpkey = str(ihead).replace('"', '')
+        tmpvalue = str(tmparr[i]).replace('"', '')
+        tmpstr += '"' + tmpkey + '":"' + tmpvalue + '",'
     tmpstr = tmpstr[:-1]
 
     return tmpstr
