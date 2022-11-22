@@ -3,6 +3,7 @@ import csv
 import json
 
 FILENAME = './sample.csv'
+ROWOFJSON = 4
 
 def main():
     # csv2tsv_temperature()
@@ -23,36 +24,49 @@ def csv2json_air():
     outarr = []
     strarr = []
     with open(FILENAME,"r") as f:
-        reader = csv.reader(f, quoting=csv.QUOTE_NONE)
+        # reader = csv.reader(f, quoting=csv.QUOTE_NONE)
+        reader = csv.reader(f)
         head = []
         for i, row in enumerate(reader):
-            tmparr = []
-            tmpjson = []
-            tmpstr = ""
-            tmpdevidstr = ""
-            tmparr.append(row[0])
-            tmparr.append(row[1])
-            tmparr.append(row[2])
-            tmparr.append(row[3])
-            tmparr.append(row[4:])
-            outarr.append(tmparr)
 
-            tmpjson = row[4:]
-            for item in tmpjson:
-                tmpstr += str(item[:]) + ","
-            # tmpstr = tmpstr[:-1]
-            tmpstr = tmpstr[1:-2]
             if i == 0:
-                # head = [row[0], row[1], row[2], row[3], row[4]]
-                head = [row[0], row[1], row[2], row[3]]
-                # head = [row[0][1:-1], row[1][1:-1], row[2][1:-1], row[3][1:-1]]
-                # head = row
+                for j in range(ROWOFJSON):
+                    tmphead = str(row[j]).replace('"','')
+                    head.append(tmphead)
                 strarr.append(head)
+                outarr.append(head)
+
             else:
+
+                tmparr = []
+                tmpstr = ""
+                tmpdevidstr = ""
+
+                jsonstrarr = row[ROWOFJSON:]
+                jsonstrarr = [ jarr.replace('"','') for jarr in jsonstrarr ]
+                jsonstrarr = [ jarr.replace('{','') for jarr in jsonstrarr ]
+                jsonstrarr = [ jarr.replace('}','') for jarr in jsonstrarr ]
+
+                jsonstrarr = [ jarr.replace(':','":"') for jarr in jsonstrarr ]
+                jsonstrarr = [ '"' + jarr for jarr in jsonstrarr ]
+                jsonstrarr = [ jarr + '"' for jarr in jsonstrarr ]
+
+                tmpjsonstr = '{'
+                for jarr in jsonstrarr:
+                    tmpjsonstr = tmpjsonstr + str(jarr) + ','
+                tmpjsonstr = tmpjsonstr[:-1] + '}'
+
+                # tmpjson = json.loads(tmpjsonstr)
+
+                for j in range(ROWOFJSON):
+                    tmparr.append(str(row[j].replace('"','')))
+                tmparr.append(tmpjsonstr)
+                outarr.append(tmparr)
+
                 tmpdevidstr = add_devid(head, tmparr)
-                # tmpdevidstr = "{" + tmpdevidstr + "}"
-                # tmpjson0 = json.loads(tmpdevidstr)
-                tmpstr = "{" + tmpdevidstr + ',"data_json":' + tmpstr + "}" 
+
+                tmpstr = '{' + tmpdevidstr + ',"data_json":' + tmpjsonstr + '}'
+
                 tmpjson = json.loads(tmpstr)
                 strarr.append(json.loads(tmpstr))
 

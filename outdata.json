@@ -7,10 +7,10 @@
             "unmonitored": "0",
             "data_json": {
                 "original_data": "0186000000000000000000000000000000",
-                "minimum_A": 0,
-                "maximum_A": 0,
-                "pulse": 0,
-                "STPS": 0
+                "minimum_A": "0",
+                "maximum_A": "0",
+                "pulse": "0",
+                "STPS": "0"
             }
         },
         {
@@ -20,10 +20,10 @@
             "unmonitored": "1",
             "data_json": {
                 "original_data": "0187000000000000000000000000000000",
-                "minimum_A": 1,
-                "maximum_A": 1,
-                "pulse": 1,
-                "STPS": 1
+                "minimum_A": "1",
+                "maximum_A": "1",
+                "pulse": "1",
+                "STPS": "1"
             }
         }
     ]
