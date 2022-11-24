@@ -80,6 +80,8 @@ def csv2json_air():
 
     with open('./outdata.json','w') as f:
         json.dump(outjson, f, indent=4)
+    
+    return outarr, outjson
 
 def csv2tsv_vital():
     outarr = []
