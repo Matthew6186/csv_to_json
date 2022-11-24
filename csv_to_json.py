@@ -56,8 +56,6 @@ def csv2json_air():
                     tmpjsonstr = tmpjsonstr + str(jarr) + ','
                 tmpjsonstr = tmpjsonstr[:-1] + '}'
 
-                # tmpjson = json.loads(tmpjsonstr)
-
                 for j in range(ROWOFJSON):
                     tmparr.append(str(row[j].replace('"','')))
                 tmparr.append(tmpjsonstr)
@@ -67,7 +65,6 @@ def csv2json_air():
 
                 tmpstr = '{' + tmpdevidstr + ',"data_json":' + tmpjsonstr + '}'
 
-                tmpjson = json.loads(tmpstr)
                 strarr.append(json.loads(tmpstr))
 
     print(strarr[0])
