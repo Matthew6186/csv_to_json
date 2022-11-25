@@ -1,12 +1,12 @@
 from unittest import TestCase
-from app.csv_to_json import csv2json_air
+from app.csv_to_json import csv2json
 
 import json
 
-class Test_csv2json_air(TestCase):
+class Test_csv2json(TestCase):
 
     def test_json(self):
-        outarr , outjson = csv2json_air()
+        outjson = csv2json()
         with open("tests/outdata.json", 'r', encoding='utf-8', newline='') as f:
             testjson = json.load(f)
 

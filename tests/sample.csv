@@ -1,3 +1,0 @@
-"device_id","acquisitiontime","inputdate","unmonitored","data_json"
-"aaaa111","2022-11-01 10:00:01.171000","NULL","0","{"original_data":"0186000000000000000000000000000000","minimum_A":0,"maximum_A":0,"pulse":0,"STPS":0}"
-"bbb22","2022-11-02 21:30:02.102000","NULL","1","{"original_data":"0187000000000000000000000000000000","minimum_A":1,"maximum_A":1,"pulse":1,"STPS":1}"

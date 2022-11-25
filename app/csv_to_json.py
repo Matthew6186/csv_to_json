@@ -8,7 +8,7 @@ ROWOFJSON = 4
 def main():
     # csv2tsv_temperature()
     # csv2tsv_vital()
-    csv2json_air()
+    csv2json()
 
 def add_devid(head, tmparr):
     tmpstr = ""
@@ -20,11 +20,25 @@ def add_devid(head, tmparr):
 
     return tmpstr
 
-def csv2json_air():
-    outarr = []
+def jsonstr_clean(jsonstrarr):
+    jsonstrarr = [ jarr.replace('"','') for jarr in jsonstrarr ]
+    jsonstrarr = [ jarr.replace('{','') for jarr in jsonstrarr ]
+    jsonstrarr = [ jarr.replace('}','') for jarr in jsonstrarr ]
+
+    jsonstrarr = [ jarr.replace(':','":"') for jarr in jsonstrarr ]
+    jsonstrarr = [ '"' + jarr for jarr in jsonstrarr ]
+    jsonstrarr = [ jarr + '"' for jarr in jsonstrarr ]
+
+    tmpjsonstr = '{'
+    for jarr in jsonstrarr:
+        tmpjsonstr = tmpjsonstr + str(jarr) + ','
+    tmpjsonstr = tmpjsonstr[:-1] + '}'
+
+    return tmpjsonstr
+
+def csv2json():
     strarr = []
     with open(FILENAME,"r") as f:
-        # reader = csv.reader(f, quoting=csv.QUOTE_NONE)
         reader = csv.reader(f)
         head = []
         for i, row in enumerate(reader):
@@ -34,8 +48,6 @@ def csv2json_air():
                     tmphead = str(row[j]).replace('"','')
                     head.append(tmphead)
                 strarr.append(head)
-                outarr.append(head)
-
             else:
 
                 tmparr = []
@@ -43,23 +55,12 @@ def csv2json_air():
                 tmpdevidstr = ""
 
                 jsonstrarr = row[ROWOFJSON:]
-                jsonstrarr = [ jarr.replace('"','') for jarr in jsonstrarr ]
-                jsonstrarr = [ jarr.replace('{','') for jarr in jsonstrarr ]
-                jsonstrarr = [ jarr.replace('}','') for jarr in jsonstrarr ]
 
-                jsonstrarr = [ jarr.replace(':','":"') for jarr in jsonstrarr ]
-                jsonstrarr = [ '"' + jarr for jarr in jsonstrarr ]
-                jsonstrarr = [ jarr + '"' for jarr in jsonstrarr ]
-
-                tmpjsonstr = '{'
-                for jarr in jsonstrarr:
-                    tmpjsonstr = tmpjsonstr + str(jarr) + ','
-                tmpjsonstr = tmpjsonstr[:-1] + '}'
+                tmpjsonstr = jsonstr_clean(jsonstrarr)
 
                 for j in range(ROWOFJSON):
                     tmparr.append(str(row[j].replace('"','')))
                 tmparr.append(tmpjsonstr)
-                outarr.append(tmparr)
 
                 tmpdevidstr = add_devid(head, tmparr)
 
@@ -70,10 +71,6 @@ def csv2json_air():
     print(strarr[0])
     print(strarr[1:3])
 
-    with open('./out.tsv', 'w', newline="") as f:
-        writer = csv.writer(f, delimiter='\t', quoting=csv.QUOTE_NONE, escapechar='\\')
-        writer.writerows(outarr)
-
     prop_name = os.path.basename(FILENAME)
     outjson = {}
     outjson[prop_name] = strarr[1:]
@@ -81,7 +78,7 @@ def csv2json_air():
     with open('./outdata.json','w') as f:
         json.dump(outjson, f, indent=4)
     
-    return outarr, outjson
+    return outjson
 
 def csv2tsv_vital():
     outarr = []
