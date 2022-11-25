@@ -70,7 +70,7 @@ def csv2json(args):
     print(strarr[0])
     print(strarr[1:3])
 
-    prop_name = os.path.basename(FILENAME)
+    prop_name = os.path.basename(args.filename)
     outjson = {}
     outjson[prop_name] = strarr[1:]
 
