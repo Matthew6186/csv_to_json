@@ -10,8 +10,13 @@ def main():
     # csv2tsv_vital()
     csv2json()
 
-def add_devid(head, tmparr):
+def create_devidstr(head, row):
     tmpstr = ""
+    tmparr = []
+
+    for j in range(ROWOFJSON):
+        tmparr.append(str(row[j].replace('"','')))
+
     for i, ihead in enumerate(head):
         tmpkey = str(ihead).replace('"', '')
         tmpvalue = str(tmparr[i]).replace('"', '')
@@ -49,20 +54,12 @@ def csv2json():
                     head.append(tmphead)
                 strarr.append(head)
             else:
-
-                tmparr = []
                 tmpstr = ""
-                tmpdevidstr = ""
+
+                tmpdevidstr = create_devidstr(head, row)
 
                 jsonstrarr = row[ROWOFJSON:]
-
                 tmpjsonstr = jsonstr_clean(jsonstrarr)
-
-                for j in range(ROWOFJSON):
-                    tmparr.append(str(row[j].replace('"','')))
-                tmparr.append(tmpjsonstr)
-
-                tmpdevidstr = add_devid(head, tmparr)
 
                 tmpstr = '{' + tmpdevidstr + ',"data_json":' + tmpjsonstr + '}'
 
@@ -108,7 +105,7 @@ def csv2tsv_vital():
                 # head = row
                 strarr.append(head)
             else:
-                tmpdevidstr = add_devid(head, tmparr)
+                tmpdevidstr = create_devidstr(head, tmparr)
                 # tmpdevidstr = "{" + tmpdevidstr + "}"
                 # tmpjson0 = json.loads(tmpdevidstr)
                 tmpstr = "{" + tmpdevidstr + ',"data_json":' + tmpstr + "}" 
