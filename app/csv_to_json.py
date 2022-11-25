@@ -1,14 +1,15 @@
 import os.path
 import csv
 import json
+import argparse
 
 FILENAME = './sample.csv'
 ROWOFJSON = 4
 
-def main():
+def main(args):
     # csv2tsv_temperature()
     # csv2tsv_vital()
-    csv2json()
+    csv2json(args)
 
 def create_devidstr(head, row):
     tmpstr = ""
@@ -41,9 +42,10 @@ def jsonstr_clean(jsonstrarr):
 
     return tmpjsonstr
 
-def csv2json():
+def csv2json(args):
+
     strarr = []
-    with open(FILENAME,"r") as f:
+    with open(args.filename,"r") as f:
         reader = csv.reader(f)
         head = []
         for i, row in enumerate(reader):
@@ -170,4 +172,11 @@ def csv2tsv_temperature():
         json.dump(outjson, f, indent=4)
 
 if __name__ == "__main__":
-    main()
+
+    parser = argparse.ArgumentParser(description="convert csv file(includes json stirng) into complete json file")
+
+    parser.add_argument('-n', '--filename', help='input csv filepath', type=str, required=True)
+
+    args = parser.parse_args()
+
+    main(args)
